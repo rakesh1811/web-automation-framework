@@ -1,19 +1,15 @@
 # Web Automation Framework – Playwright + TypeScript
 
 Enterprise-style UI automation for the Login and Signup features of
-(https://automationexercise.com), built with Playwright Test, TypeScript (strict),
+[automationexercise.com](https://automationexercise.com), built with Playwright Test, TypeScript (strict),
 the Page Object Model, Allure step reporting, Winston logging and GitHub Actions.
 
 It automates the 11 test cases in `AutomationExercise_Login_Signup_TestCases.xlsx` (TC01–TC11).
 
-
-
-
-
 **Smoke / regression / e2e** are selected by tags (`@smoke`, `@regression`, `@e2e`), defined once per test case in
 `test-data/test-cases.ts`.
 
-2. Traceability matrix
+## Traceability matrix
 
 | TC   | Scenario                                                      | Type     | Spec                                  | Tags                   |
 | ---- | ------------------------------------------------------------- | -------- | ------------------------------------- | ---------------------- |
@@ -29,5 +25,21 @@ It automates the 11 test cases in `AutomationExercise_Login_Signup_TestCases.xls
 | TC10 | Signup with blank name                                        | Negative | `tests/regression/signup.spec.ts`     | regression             |
 | TC11 | Login, register if not found, log in again and delete account | Positive | `tests/e2e/login-or-register.spec.ts` | regression, e2e        |
 
+## Running tests and reports
 
+| Command                 | What it does                                                                                                           |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `npm test`              | Runs all 11 tests                                                                                                      |
+| `npm run report`        | Creates `reports/AutomationExercise_Allure_Report.html` (single file to share) and opens the interactive Allure report |
+| `npm run report:single` | Creates only the shareable HTML file, without opening the browser                                                      |
+| `npm run clear`         | Deletes old results, reports, screenshots and logs before a fresh run                                                  |
 
+Typical run:
+
+```bash
+npm run clear
+npm test
+npm run report
+```
+
+Allure report generation requires Java 8 or later.

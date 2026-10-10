@@ -1,4 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
+import { fillSecret } from '../utils/secureInput';
 
 export class LoginFormComponent {
   readonly name = 'Login form';
@@ -19,7 +20,7 @@ export class LoginFormComponent {
 
   async fill(email: string, password: string): Promise<void> {
     await this.emailInput.fill(email);
-    await this.passwordInput.fill(password);
+    await fillSecret(this.passwordInput, password);
   }
 
   async submit(): Promise<void> {

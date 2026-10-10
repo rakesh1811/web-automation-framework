@@ -121,7 +121,7 @@ export const TEST_CASES = {
     type: 'Positive',
     objective:
       'A visitor who tries to log in without an account can register with the same email and password, log in with them, and delete the account.',
-    precondition: 'Email qa_<DateTimeStamp>_Automation@testmail.com not yet registered',
+    precondition: 'Email qa_{DateTimeStamp}_Automation@testmail.com not yet registered',
     expected:
       'Login rejected with "Your email or password is incorrect!"; signup completes with "Account Created!"; after logout, login with the same credentials shows "Logged in as {name}"; "Account Deleted!" shown',
     severity: 'critical',

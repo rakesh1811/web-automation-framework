@@ -21,7 +21,10 @@
     "report:allure": "allure generate allure-results --clean -o allure-report",
     "report:open": "allure open allure-report",
     "report:html": "playwright show-report playwright-report",
-    "clean": "node scripts/clean.mjs"
+    "clean": "node scripts/clean.mjs",
+    "report": "node scripts/report.mjs",
+    "report:single": "node scripts/report.mjs --no-open",
+    "clear": "node scripts/clean.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

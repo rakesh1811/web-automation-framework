@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import type { UserAccount } from '../types';
+import { fillSecret } from '../utils/secureInput';
 import { xpathContainsTextCI } from '../utils/text';
 import { BasePage } from './BasePage';
 
@@ -57,7 +58,7 @@ export class AccountInformationPage extends BasePage {
 
   async fillAccountDetails(user: UserAccount): Promise<void> {
     await (user.title === 'Mr' ? this.titleMr : this.titleMrs).check();
-    await this.passwordInput.fill(user.password);
+    await fillSecret(this.passwordInput, user.password);
     await this.daySelect.selectOption(user.birthDay);
     await this.monthSelect.selectOption(user.birthMonth);
     await this.yearSelect.selectOption(user.birthYear);
