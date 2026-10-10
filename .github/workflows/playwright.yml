@@ -1,0 +1,104 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [Development, main]
+  pull_request:
+    branches: [Development, main]
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Suite to run'
+        required: true
+        default: regression
+        type: choice
+        options: [smoke, regression, e2e, all]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: playwright-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+      TEST_ENV: ci
+      BASE_URL: ${{ vars.BASE_URL || 'https://automationexercise.com' }}
+      API_BASE_URL: ${{ vars.API_BASE_URL || 'https://automationexercise.com/api' }}
+      HEADLESS: 'true'
+      WORKERS: ${{ vars.WORKERS || '1' }}
+      LOG_LEVEL: info
+      SUITE: ${{ github.event.inputs.suite || 'regression' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package.json
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Run tests (${{ env.SUITE }})
+        run: |
+          case "$SUITE" in
+            smoke) npm run test:smoke ;;
+            e2e) npm run test:e2e ;;
+            all) npm test ;;
+            *) npm run test:regression ;;
+          esac
+
+      - name: Set up Java for Allure
+        if: always()
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Generate Allure report
+        if: always()
+        run: npm run report:allure
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          retention-days: 14
+
+      - name: Upload test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence
+          path: |
+            allure-results/
+            playwright-report/
+            test-results/
+            screenshots/
+            logs/
+          retention-days: 14

@@ -1,0 +1,17 @@
+{
+  "name": "Rakesh QA",
+  "title": "Mr",
+  "birthDay": "18",
+  "birthMonth": "11",
+  "birthYear": "1990",
+  "firstName": "Rakesh",
+  "lastName": "Tester",
+  "company": "QA Labs",
+  "address1": "Al Nahda Street 1",
+  "address2": "Building 5",
+  "country": "India",
+  "state": "Karnataka",
+  "city": "Bangalore",
+  "zipcode": "560001",
+  "mobileNumber": "971500000000"
+}
