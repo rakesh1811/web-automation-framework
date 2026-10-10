@@ -1,19 +1,19 @@
 # Web Automation Framework – Playwright + TypeScript
 
-Enterprise-style UI automation for the **Login** and **Signup** features of
-[automationexercise.com](https://automationexercise.com), built with Playwright Test, TypeScript (strict),
+Enterprise-style UI automation for the Login and Signup features of
+(https://automationexercise.com), built with Playwright Test, TypeScript (strict),
 the Page Object Model, Allure step reporting, Winston logging and GitHub Actions.
 
 It automates the 11 test cases in `AutomationExercise_Login_Signup_TestCases.xlsx` (TC01–TC11).
 
----
+
 
 
 
 **Smoke / regression / e2e** are selected by tags (`@smoke`, `@regression`, `@e2e`), defined once per test case in
 `test-data/test-cases.ts`.
 
-## 2. Traceability matrix
+2. Traceability matrix
 
 | TC   | Scenario                                                      | Type     | Spec                                  | Tags                   |
 | ---- | ------------------------------------------------------------- | -------- | ------------------------------------- | ---------------------- |
